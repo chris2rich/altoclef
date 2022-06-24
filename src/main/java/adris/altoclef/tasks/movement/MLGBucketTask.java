@@ -30,7 +30,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -159,9 +158,7 @@ public class MLGBucketTask extends Task {
                     }
                 }
             }
-            // Try to capture tall grass as well...
-            BlockPos[] toCheckLook = new BlockPos[] {toPlaceOn, toPlaceOn.up(), toPlaceOn.up(2)};
-            if (hasClutch && Arrays.stream(toCheckLook).anyMatch(check -> mod.getClientBaritone().getPlayerContext().isLookingAt(check))) {
+            if (hasClutch && mod.getClientBaritone().getPlayerContext().isLookingAt(toPlaceOn)) {
                 Debug.logMessage("HIT: " + willLandIn);
                 _placedPos = willLandIn;
                 mod.getInputControls().tryPress(Input.CLICK_RIGHT);
@@ -490,7 +487,7 @@ public class MLGBucketTask extends Task {
 
     @Override
     public boolean isFinished(AltoClef mod) {
-        return mod.getPlayer().isSwimming() || mod.getPlayer().isTouchingWater() || mod.getPlayer().isOnGround() || mod.getPlayer().isClimbing();
+        return EntityHelper.isGrounded(mod);
     }
 
     @Override
