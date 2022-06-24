@@ -34,7 +34,7 @@ public class CommandStatusOverlay {
     private DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss.SSS").withZone(ZoneId.from(ZoneOffset.of("+00:00"))); // The date formatter
     private void drawTaskChain(TextRenderer renderer, MatrixStack stack, float dx, float dy, int color, int maxLines, List<Task> tasks, AltoClef mod) {
         if (tasks.size() == 0) {
-            renderer.draw(stack, " (no task running) ", dx, dy, color);
+            renderer.draw(stack, " (No task is running) ", dx, dy, color);
             if (_lastTime+10000 < Instant.now().toEpochMilli() && mod.getModSettings().shouldShowTimer()) {//if it doesn't run any task in 10 secs
                 _timeRunning = Instant.now().toEpochMilli();//reset the timer
             }
