@@ -19,6 +19,7 @@ public class AltoClefCommands {
                 new DepositCommand(),
                 new StashCommand(),
                 new GotoCommand(),
+                new GotoWithElytraCommand(),
                 new IdleCommand(),
                 new CoordsCommand(),
                 new StatusCommand(),
@@ -33,7 +34,7 @@ public class AltoClefCommands {
                 new SetGammaCommand(),
                 new ListCommand(),
                 new CustomCommand()
-                //new TestMoveInventoryCommand(),
+                //    new TestMoveInventoryCommand(),
                 //    new TestSwapInventoryCommand()
         );
     }
