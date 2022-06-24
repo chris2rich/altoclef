@@ -80,7 +80,7 @@ public class MobDefenseChain extends SingleTaskChain {
             return Float.NEGATIVE_INFINITY;
         }
 
-        if (!mod.getModSettings().isMobDefense()) {
+        if (!mod.getModSettings().isMobDefense() || mod.getBehaviour().isDefenseDisabled()) {
             return Float.NEGATIVE_INFINITY;
         }
 
@@ -392,10 +392,10 @@ public class MobDefenseChain extends SingleTaskChain {
 
                 //Debug.logMessage("EXPECTED HIT OFFSET: " + delta + " ( " + projectile.gravity + ")");
 
-                double horizontalDistanceSq = delta.x * delta.x + delta.z * delta.z;
-                double verticalDistance = Math.abs(delta.y);
+                double horizontalDistance = Math.sqrt(delta.x * delta.x + delta.z * delta.z);
+                double verticalDistance = delta.y;
 
-                if (horizontalDistanceSq < ARROW_KEEP_DISTANCE_HORIZONTAL*ARROW_KEEP_DISTANCE_HORIZONTAL && verticalDistance < ARROW_KEEP_DISTANCE_VERTICAL)
+                if (horizontalDistance < ARROW_KEEP_DISTANCE_HORIZONTAL && verticalDistance < ARROW_KEEP_DISTANCE_VERTICAL)
                     return true;
             }
         } catch (ConcurrentModificationException e) {
