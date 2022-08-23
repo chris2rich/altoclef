@@ -20,10 +20,11 @@ import java.util.function.Predicate;
 
 /**
  * Represents the current behaviour/"on the fly settings" of the bot.
- *
+
  * Use this to change how the bot works for the duration of a task.
- *
+
  * (for example, "Build this bridge and avoid mining any blocks nearby")
+
  */
 public class BotBehaviour {
 
