@@ -669,7 +669,7 @@ public class BeatMinecraft2Task extends Task {
                     return _gearTask;
                 }
                 // Then go to the nether.
-                setDebugState("Going to Nether");
+                setDebugState("Going to the Nether");
                 return _goToNetherTask;
             }
             case NETHER -> {
@@ -693,14 +693,14 @@ public class BeatMinecraft2Task extends Task {
         }
         if (shouldForce(mod, _setBedSpawnTask)) {
             // Set spawnpoint and set our bed spawn when it happens.
-            setDebugState("Setting spawnpoint now.");
+            setDebugState("Setting the spawnpoint now.");
             return _setBedSpawnTask;
         }
         // Get close to portal. If we're close enough, set our bed spawn somewhere nearby.
         if (WorldHelper.inRangeXZ(mod.getPlayer(), WorldHelper.toVec3d(_endPortalCenterLocation), END_PORTAL_BED_SPAWN_RANGE)) {
             return _setBedSpawnTask;
         } else {
-            setDebugState("Approaching portal (to set spawnpoint)");
+            setDebugState("Approaching the portal (to set the spawnpoint)");
             return new GetToXZTask(_endPortalCenterLocation.getX(), _endPortalCenterLocation.getZ());
         }
     }
