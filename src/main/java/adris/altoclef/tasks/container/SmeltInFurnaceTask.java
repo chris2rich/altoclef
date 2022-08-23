@@ -166,8 +166,8 @@ public class SmeltInFurnaceTask extends ResourceTask {
             double totalFuelInFurnace = ItemHelper.getFuelAmount(_furnaceCache.fuelSlot) + _furnaceCache.burningFuelCount + _furnaceCache.burnPercentage;
             // Fuel needed = (mat_target - out_in_inventory - out_in_furnace - totalFuelInFurnace)
             double fuelNeeded = _ignoreMaterials
-                        ? Math.min(materialTarget.matches(_furnaceCache.materialSlot.getItem()) ? _furnaceCache.materialSlot.getCount() : 0, materialTarget.getTargetCount())
-                        : materialTarget.getTargetCount()
+                    ? Math.min(materialTarget.matches(_furnaceCache.materialSlot.getItem()) ? _furnaceCache.materialSlot.getCount() : 0, materialTarget.getTargetCount())
+                    : materialTarget.getTargetCount()
                     /* - mod.getItemStorage().getItemCountInventoryOnly(materialTarget.getMatches()) */
                     - mod.getItemStorage().getItemCountInventoryOnly(outputTarget.getMatches())
                     - (outputTarget.matches(_furnaceCache.outputSlot.getItem()) ? _furnaceCache.outputSlot.getCount() : 0)
@@ -190,7 +190,13 @@ public class SmeltInFurnaceTask extends ResourceTask {
                 return new MoveInaccessibleItemToInventoryTask(_allMaterials);
             }
 
-            // We have fuel and materials. Get to our container and smelt!
+            // Make sure we have room for the output in our inventory
+            EnsureFreeInventorySlotTask _freeInventoryTask = new EnsureFreeInventorySlotTask();
+            if (_freeInventoryTask.isActive() && !_freeInventoryTask.isFinished(mod) && !mod.getItemStorage().hasEmptyInventorySlot()) {
+                setDebugState("Freeing inventory.");
+                return _freeInventoryTask;
+            }
+            // We have fuel and materials and there is a free space in the inventory. Get to our container and smelt!
             return super.onTick(mod);
         }
 
@@ -269,10 +275,10 @@ public class SmeltInFurnaceTask extends ResourceTask {
                             double delta = needs - fuelAmount;
                             if (
                                     (bestStack == null) ||
-                                    // If our best is above, prioritize lower values
-                                    (closestDelta > 0 && delta < closestDelta) ||
-                                    // If our best is below, prioritize higher below values
-                                    (closestDelta < 0 && delta < 0 && delta > closestDelta)
+                                            // If our best is above, prioritize lower values
+                                            (closestDelta > 0 && delta < closestDelta) ||
+                                            // If our best is below, prioritize higher below values
+                                            (closestDelta < 0 && delta < 0 && delta > closestDelta)
                             ) {
                                 bestStack = stack;
                                 closestDelta = delta;
